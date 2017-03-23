@@ -17,3 +17,17 @@ DRBD的核心功能是通过Linux内核模块实现的。具体来说，DRBD构�
 图1.1。 DRBD在Linux I / O堆栈中的地位
 
 ![drbd-in-kernel](./images/drbd-in-kernel.png)
+
+## 1.2 用户管理工具
+
+DRBD附带一套与内核模块通信的管理工具，以配置和管理DRBD资源。从顶层到最底层都是：
+
+*drbdmanage* 作为单独的项目提供，这是在多节点群集中编排DRBD资源的推荐方法。DRBD Manage使用一个DRBD 9资源来存储其群集范围的配置数据，并通过调用外部程序（如lvcreate和drbdadm），提供了一种快速简单的方式来执行最常用的管理任务。
+
+有关详细信息，请参阅本文档中的DRBD管理条目。
+
+*drbdadm* DRBD-utils程序套件的高级管理工具。从配置文件/etc/drbd.conf获取所有DRBD配置参数，并充当drbdsetup和drbdmeta的前端。drbdadm具有干运行模式，使用-d选项调用，显示drbdsetup和drbdmeta调用drbdadm将会发出而不实际调用这些命令。
+
+*drbdsetup* 配置加载到内核中的DRBD模块。 drbdsetup的所有参数必须在命令行中传递。 drbdadm和drbdsetup之间的分离允许最大的灵活性。大多数用户很少需要直接使用drbdsetup，如果有的话。
+
+*drbdmeta* 允许创建，转储，恢复和修改DRBD元数据结构。像drbdsetup一样，大多数用户很少需要直接使用drbdmeta。
